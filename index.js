@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+
 var path = require('path');
 var filename= path.resolve('README.md');
 console.log(filename);
