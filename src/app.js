@@ -1,5 +1,5 @@
-let path = require('path');
-let ruta= path.resolve('README.md');
+const path = require('path');
+const ruta= path.resolve('src/README.md');
 //const fetch = require('node-fetch');
 
 fs = require('fs');
@@ -10,7 +10,7 @@ fs.readFile(ruta, 'utf-8', function (err,data){
         console.log(err);
     }
     extraerLinks(data);
-    //console.log(data);
+   // console.log(data);
 });
 
 
