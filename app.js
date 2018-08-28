@@ -1,5 +1,6 @@
 const path = require('path');
 const ruta= path.resolve(path.join(process.cwd(), 'README.md'));
+const fetch = require('node-fetch');
 console.log(ruta)
 //const fetch = require('node-fetch');
 
@@ -49,15 +50,19 @@ function extraerLinks(markdown) {
       });
   };
   Marked(markdown, {renderer: renderer});
+  validarLinks(links)
   console.log(links)
-  return validarLinks(data);
-  console.log(validarLinks())
+  // return links;
+
 };
-//funcion para validar los links 
+
+/*//funcion para validar los links 
 function validarLinks(links){
+  let url = links.href;
+  console.log('holaa');
   links.forEach(element=>{
     const http = require('http');
-    fetch(http.get(links,(res)=>{
+    fetch(http.get(url,(res)=>{
       const {statusCode} = res;
     })).then(response => response
 
@@ -71,4 +76,20 @@ function validarLinks(links){
   })
   
 }
+*/
+function validarLinks(links) {
+  links.forEach(element => {
+    let url = element.href;
+    fetch(url).then(response => response
+    ).then(data => {
+      console.log(data.url);
+      console.log(data.status);
+      console.log(data.statusText); 
 
+      if (data.status=='200'){
+      }
+    }).catch(error => {
+      console.error('ERROR > ' + error.status);
+    });
+  });
+}
