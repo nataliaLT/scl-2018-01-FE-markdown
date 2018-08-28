@@ -50,5 +50,25 @@ function extraerLinks(markdown) {
   };
   Marked(markdown, {renderer: renderer});
   console.log(links)
-  return links;
+  return validarLinks(data);
+  console.log(validarLinks())
 };
+//funcion para validar los links 
+function validarLinks(links){
+  links.forEach(element=>{
+    const http = require('http');
+    fetch(http.get(links,(res)=>{
+      const {statusCode} = res;
+    })).then(response => response
+
+  ).then(data =>{
+    if(data.statusCode === 200){
+      console.log('ok')
+    }
+  }).catch(error =>{
+    console.log ('fail')
+  })
+  })
+  
+}
+
