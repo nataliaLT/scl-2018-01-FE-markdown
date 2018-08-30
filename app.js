@@ -1,9 +1,9 @@
 const path = require('path');
-const ruta= path.resolve(path.join(process.cwd(), 'README.md'));
+const ruta= path.resolve(path.join(process.cwd(),"README.md"));
 const fetch = require('node-fetch');
-console.log(ruta)
+console.log(ruta);
 //const fetch = require('node-fetch');
-let XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 fs = require('fs');
 
@@ -13,6 +13,7 @@ fs.readFile(ruta, 'utf-8', function (err,data){
        //console.log(err);
     }
     extraerLinks(data);
+    console.log(data);
 });
 
 
@@ -37,7 +38,7 @@ function extraerLinks(markdown) {
       title: title,
     });
   };
- /* renderer.image = function(href, title, text) {
+ renderer.image = function(href, title, text) {
       // Remove image size at the end, e.g. ' =20%x50'
       href = href.replace(/ =\d*%?x\d*%?$/, '');
       links.push({
@@ -45,45 +46,29 @@ function extraerLinks(markdown) {
         text: text,
         title: title,
       });
-  };*/
+  };
   Marked(markdown, {renderer: renderer});
   validarLinks(links)
   //console.log(links)
   // return links;
 
-};
-
-/*function validarLinks(links) {
-  links.forEach(element => {
-    let url = element.href;
-    console.log(url)
-    fetch(url).then(response => response
-    ).then(data => {
-      //console.log(data.url);
-      //console.log(data.status);
-      //console.log(data.statusText); 
-
-      if (data.status=='200'){
-      }
-    }).catch(error => {
-      console.error('ERROR > ' + error.status);
-    });
-  });
-}*/
-
-
+}
+function traerStatus(url, status){//funcion que se ejecutara en caso de que el links este correcto
+  console.log(url + "ok" + status);// me junta mi link con ok y el status
+}
+function statusFallido(url, status){//funcion que se ejecutara en caso de que el links falle
+  console.log(url + " fail" + status);
+}
 function validarLinks(links) {
-  links.forEach(element => {
-    let url = element.href;
-    console.log(url)
-  //obtener 
-  const xhttp = new XMLHttpRequest()
+  links.forEach(element => {//recorro mi objeto links
+    let url = element.href;//guardo en una variable solo la propiedad links de mi objeto
+  var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-    if (xhttp.readyState === 200 && xhttp.status === 200) {
-      console.log((url, xhttp.status));
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      traerStatus(url, xhttp.status);
     } else if ( xhttp.readyState == 4 && xhttp.status != 200 ){
-     console.log((url, xhttp.status));
-    } 
+      statusFallido(url, xhttp.status);
+    }
   };
   xhttp.open("GET", url, true);
   xhttp.send();
