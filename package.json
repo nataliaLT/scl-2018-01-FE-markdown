@@ -26,7 +26,8 @@
     "chai": "^4.1.2",
     "marked": "^0.5.0",
     "mocha": "^5.2.0",
-    "node-fetch": "^2.2.0"
+    "node-fetch": "^2.2.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "eslint": "^5.4.0",
