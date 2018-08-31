@@ -53,6 +53,7 @@ function extraerLinks(markdown) {
   // return links;
 
 }
+
 function traerStatus(url, status){//funcion que se ejecutara en caso de que el links este correcto
   console.log(url + "ok" + status);// me junta mi link con ok y el status
 }
