@@ -1,6 +1,6 @@
 {
-  "name": "scl-2018-01-fe-markdown",
-  "version": "0.0.1",
+  "name": "natalia_lucero_markdown",
+  "version": "0.0.2",
   "description": "proyecto markdown ",
   "main": "index.js",
   "scripts": {
@@ -11,12 +11,12 @@
     "url": "git+https://github.com/nataliaLT/scl-2018-01-FE-markdown.git"
   },
   "keywords": [
-    "agustin"
+    "markdown"
   ],
   "author": "Natalia Lucero",
   "license": "ISC",
   "bin": {
-    "md-links": "./cli.js"
+    "md-links": "./index.js"
   },
   "bugs": {
     "url": "https://github.com/nataliaLT/scl-2018-01-FE-markdown/issues"
