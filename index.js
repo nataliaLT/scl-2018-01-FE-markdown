@@ -1,10 +1,8 @@
 const path = require('path');
-const ruta= path.resolve(path.join(process.cwd(),"README.md"));
-const fetch = require('node-fetch');
+const ruta = path.resolve(process.argv[2]);
 console.log(ruta);
-//const fetch = require('node-fetch');
+const fetch = require('node-fetch');
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-//let archivo = /(/ alreves.md) $/i;
 fs = require('fs');
 
 fs.readFile(ruta, 'utf-8', function (err,data){
@@ -49,8 +47,8 @@ function extraerLinks(markdown) {
   };
   Marked(markdown, {renderer: renderer});
   validarLinks(links)
-  //console.log(links)
-  // return links;
+  console.log(links)
+   return links;
 
 }
 
