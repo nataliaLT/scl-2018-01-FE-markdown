@@ -5,14 +5,14 @@ const fetch = require('node-fetch');
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 fs = require('fs');
 
-fs.readFile(ruta, 'utf-8', function (err,data){
+/*fs.readFile(ruta, 'utf-8', function (err,data){
     if(err) throw err;
     {
        //console.log(err);
     }
     extraerLinks(data);
     console.log(data);
-});
+});*/
 
 
 //npm install --save marked
@@ -52,13 +52,14 @@ function extraerLinks(markdown) {
 
 }
 
-function traerStatus(url, status){//funcion que se ejecutara en caso de que el link este correcto
+/*function traerStatus(url, status){//funcion que se ejecutara en caso de que el link este correcto
   console.log(url + " ok " + status);// me junta mi link con ok y el status
 }
 function statusFallido(url, status){//funcion que se ejecutara en caso de que el link falle
   console.log(url + " fail " + status);
 }
-function validarLinks(links) {
+
+/*function validarLinks(links) {
   links.forEach(element => {//recorro mi objeto links
     let url = element.href;//guardo en una variable solo la propiedad link de mi objeto
   var xhttp = new XMLHttpRequest();
@@ -73,25 +74,32 @@ function validarLinks(links) {
   xhttp.send();
   })
 }
+*/
 
 function leerArchivo(ruta){
   return new Promise((resolve, reject)=>{
-    fs.readFile(ruta, 'uft-8', (error, data)=>{})
-
-  })
+    fs.readFile(ruta, 'utf-8', (error, data)=>{
+      if(error){
+        return reject(error);
+      }
+      return resolve(extraerLinks(data));
+    });
+  });
 }
 
 const validarLinks= (links) =>{
-  links.forEach(element => {//recorro mi objeto links
+  let promises = links.map(element => {//recorro mi objeto links
     let url = element.href;
-  let promise = new promise((resolve, reject)=>{
+  let promise = new Promise((resolve, reject)=>{
     xhttp.onreadystatechange = function() {
+      element.status = xhttp.status;
       if (xhttp.readyState == 4 && xhttp.status == 200) {
-       resolve (traerStatus(url, xhttp.status));
+        return resolve (element);
       } else if ( xhttp.readyState == 4 && xhttp.status != 200 ){
-        resolve (statusFallido(url, xhttp.status));
-      } else{
-        reject("Error")
+        return resolve (element);
+      } else {
+        element.error = "No se pudo conectar";
+        return resolve (element);
       }
     };
     xhttp.open("GET", url, true);
@@ -99,9 +107,21 @@ const validarLinks= (links) =>{
   });
   return promise;
 });
+  return Promise.all(promises);
+  leerArchivo(ruta)
+.then((validarLink)=>{
+  return validarLinks(links);
+  
+  
+}).then((linksConStatus)=>{
+
+}).catch(error=> console.error(error));
+
 }
 //================================Petición de promesa=======================================
-validarLinks(links)
+leerArchivo(ruta)
 .then(()=>{
-return validarLinks()
+  return validarLinks(links);
+}).then((promises)=>{
+
 }).catch(error=> console.error(error));
