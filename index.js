@@ -74,7 +74,16 @@ function validarLinks(links) {
   })
 }
 
+function leerArchivo(ruta){
+  return new Promise((resolve, reject)=>{
+    fs.readFile(ruta, 'uft-8', (error, data)=>{})
+
+  })
+}
+
 const validarLinks= (links) =>{
+  links.forEach(element => {//recorro mi objeto links
+    let url = element.href;
   let promise = new promise((resolve, reject)=>{
     xhttp.onreadystatechange = function() {
       if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -89,4 +98,10 @@ const validarLinks= (links) =>{
     xhttp.send();
   });
   return promise;
+});
 }
+//================================Petición de promesa=======================================
+validarLinks(links)
+.then(()=>{
+return validarLinks()
+}).catch(error=> console.error(error));
