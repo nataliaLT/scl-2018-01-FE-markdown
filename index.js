@@ -73,3 +73,20 @@ function validarLinks(links) {
   xhttp.send();
   })
 }
+
+const validarLinks= (links) =>{
+  let promise = new promise((resolve, reject)=>{
+    xhttp.onreadystatechange = function() {
+      if (xhttp.readyState == 4 && xhttp.status == 200) {
+       resolve (traerStatus(url, xhttp.status));
+      } else if ( xhttp.readyState == 4 && xhttp.status != 200 ){
+        resolve (statusFallido(url, xhttp.status));
+      } else{
+        reject("Error")
+      }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.send();
+  });
+  return promise;
+}
